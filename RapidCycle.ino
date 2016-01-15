@@ -21,6 +21,8 @@ void rapidCycle() {
 
   wrappedFill(leds, gOffset[0] / 16, 58, CRGB::Red, LEDS_PER_HOOP);
   wrappedFill(leds + LEDS_PER_HOOP, gOffset[1] / 16, 58, CRGB::Green, LEDS_PER_HOOP);
+  wrappedFill(leds + LEDS_PER_HOOP*2, gOffset[2] / 16, 58, CRGB::Red, LEDS_PER_HOOP);
+  wrappedFill(leds + LEDS_PER_HOOP*3, gOffset[3] / 16, 58, CRGB::Yellow, LEDS_PER_HOOP);
 
   //CRGB(100,90,120)
 }

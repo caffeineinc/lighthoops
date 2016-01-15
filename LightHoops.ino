@@ -4,7 +4,7 @@ FASTLED_USING_NAMESPACE
 // Constants
 
 #define DATA_PIN      3
-#define NUM_HOOPS     2
+#define NUM_HOOPS     4
 #define LEDS_PER_HOOP 115
 #define NUM_LEDS      (NUM_HOOPS * LEDS_PER_HOOP)
 #define BRIGHTNESS          96
