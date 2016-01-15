@@ -12,7 +12,9 @@ void spinner() {
 
   // 4 colour spinner
   fourColourWheel(leds, gOffset[0] / 16);
-  fourColourWheel(leds + 115, gOffset[1] / 16);
+  fourColourWheel(leds + LEDS_PER_HOOP, gOffset[1] / 16);
+  fourColourWheel(leds + LEDS_PER_HOOP*2, gOffset[2] / 16);
+  fourColourWheel(leds + LEDS_PER_HOOP*3, gOffset[3] / 16);
 }
 
 
@@ -29,7 +31,7 @@ void fourColourWheel(CRGB *leds, int offset) {
 /**
  * Fill a region from start-length with colour, but wrap the fill within wrapSize
  * Calls 2 fill commands when needed by the underlying code.
- * 
+ *
  * Breaks if length > wrapSize; don't do that.
  */
 void wrappedFill(CRGB *leds, int start, int length, CRGB color, int wrapSize) {
@@ -39,12 +41,14 @@ void wrappedFill(CRGB *leds, int start, int length, CRGB color, int wrapSize) {
 
   // 1 segment
   if(segmentStart + length < wrapSize) {
-    fill_solid(leds+segmentStart, length, color); 
+    fill_solid(leds+segmentStart, length, color);
 
   // 2 segments
   } else {
     segmentLength = wrapSize - segmentStart - 1;
     fill_solid(leds + segmentStart, segmentLength, color);
-    fill_solid(leds, length - segmentLength, color); 
+    fill_solid(leds, length - segmentLength, color);
+  }
+}
   }
 }
