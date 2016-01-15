@@ -4,11 +4,11 @@
 
 void elasticSetup() {
   unsigned int i;
-  
+
   for(i=0; i<NUM_HOOPS; i++) {
     // Initial potential energy in the system
     gOffset[i] = 64*16;
-    
+
     gAcc[i] = 0;
     gVel[i] = 0;
   }

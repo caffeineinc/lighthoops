@@ -8,7 +8,7 @@ int gWhitePortion = 0;
 
 void rapidCycleSetup() {
   elasticSetup();
-  
+
   gFrameDelay = 0;
 }
 void rapidCycle() {
@@ -17,7 +17,7 @@ void rapidCycle() {
   }
 
   gCurrentColour = (gCurrentColour+1) % ARRAY_SIZE(gCycleColours);
-  fill_solid(leds, NUM_LEDS, gCycleColours[gCurrentColour]); 
+  fill_solid(leds, NUM_LEDS, gCycleColours[gCurrentColour]);
 
   wrappedFill(leds, gOffset[0] / 16, 58, CRGB::Red, LEDS_PER_HOOP);
   wrappedFill(leds + LEDS_PER_HOOP, gOffset[1] / 16, 58, CRGB::Green, LEDS_PER_HOOP);

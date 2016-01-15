@@ -30,9 +30,9 @@ int gFrameDelay = 10;
 
 void setup() {
   Serial.begin(9600);
-  
+
   delay(200);
-  
+
   // tell FastLED about the LED strip configuration
   FastLED.addLeds<NEOPIXEL,DATA_PIN>(leds, NUM_LEDS);
 
@@ -53,10 +53,10 @@ void loop()
   gPatterns[gCurrentPatternNumber]();
 
   // send the 'leds' array out to the actual LED strip
-  FastLED.show();  
+  FastLED.show();
   // insert a delay to keep the framerate modest
   if(gFrameDelay) {
-    FastLED.delay(gFrameDelay ); 
+    FastLED.delay(gFrameDelay );
   }
 
   // do some periodic updates
@@ -70,6 +70,6 @@ void nextPattern()
 {
   // add one to the current pattern number, and wrap around at the end
   gCurrentPatternNumber = (gCurrentPatternNumber + 1) % ARRAY_SIZE(gPatterns);
-  gPatternSetups[gCurrentPatternNumber](); 
+  gPatternSetups[gCurrentPatternNumber]();
 }
 
