@@ -21,6 +21,8 @@ CRGB leds[NUM_LEDS];
 
 uint8_t energy[NUM_LEDS];
 
+// Libraries
+#include "ParticleSystem.h"
 
 uint8_t gCurrentPatternNumber = 0; // Index number of which pattern is current
 uint8_t gHue = 0; // rotating "base color" used by many of the patterns
