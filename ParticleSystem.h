@@ -43,3 +43,34 @@ void constrainParticle(int i, long min, long max) {
   gPointMax[i] = max * 16;
 }
 
+/**
+ * Particle GFX lib
+ */
+
+
+/**
+ * Draw blended gradients between each particle
+ */
+void blendBetweenParticles() {
+  int i, nextI, length;
+  for(i=0; i<NUM_POINTS; i++) {
+    nextI = (i+1) % NUM_POINTS;
+    
+    length = (gPointOffset[nextI ] - gPointOffset[i])/16;
+    if(length < 0) length += LEDS_PER_HOOP;
+    wrappedGradient(leds, gPointOffset[i]/16, length, gPointColour[i], gPointColour[nextI], LEDS_PER_HOOP);
+  }
+}
+
+/**
+ * Draw each particle
+ */
+void drawParticles() {
+  int i;
+  
+  for(i=0; i<NUM_POINTS; i++) {
+    leds[gPointOffset[i] / 16] = gPointColour[i];
+  }
+}
+ 
+
