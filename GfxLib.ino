@@ -31,16 +31,16 @@ void wrappedFill(CRGB *leds, int start, int length, CRGB color, int wrapSize) {
  *
  * Breaks if length > wrapSize; don't do that.
  */
-void wrappedGradient(CRGB *leds, int start, int length, CHSV color1, CHSV color2, int wrapSize) {
+void wrappedGradient(CRGB *leds, int start, int length, CRGB color1, CRGB color2, int wrapSize) {
   int segmentStart, segmentLength;
-  CHSV midColor1, midColor2;
+  CRGB midColor1, midColor2;
 
   segmentStart = start % wrapSize;
   if(segmentStart < 0) segmentStart += wrapSize;
 
   // 1 segment
   if(segmentStart + length < wrapSize) {
-    fill_gradient(leds, segmentStart, color1, segmentStart+length, color2);
+    fill_gradient_RGB(leds, segmentStart, color1, segmentStart+length, color2);
 
   // 2 segments
   } else {
@@ -50,7 +50,7 @@ void wrappedGradient(CRGB *leds, int start, int length, CHSV color1, CHSV color2
     midColor2 = blend( color1, color2, (segmentLength+1) * 256 / length);
 
     // To do: find mid-point colour
-    fill_gradient(leds, segmentStart, color1, wrapSize-1, midColor1);
-    fill_gradient(leds, 0, midColor2, length - segmentLength, color2);
+    fill_gradient_RGB(leds, segmentStart, color1, wrapSize-1, midColor1);
+    fill_gradient_RGB(leds, 0, midColor2, length - segmentLength, color2);
   }
 }

@@ -68,7 +68,8 @@ void moveParticles() {
  * Particle GFX lib
  */
 
-void wrappedGradient(CRGB *, int, int, CHSV, CHSV, int);
+//void wrappedGradient(CRGB *, int, int, CHSV, CHSV, int);
+void wrappedGradient(CRGB *, int, int, CRGB, CRGB, int);
 
 /**
  * Draw blended gradients between each particle

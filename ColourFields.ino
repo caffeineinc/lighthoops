@@ -4,8 +4,6 @@
 
 // Number of points in the particle system
 
-void wrappedGradient(CRGB *, int, int, CHSV, CHSV, int);
-
 void colourFieldsSetup() {
   byte i;
 
