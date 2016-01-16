@@ -1,3 +1,4 @@
+void fourColourWheel(CRGB *leds, int offset);
 
 /**
  * 4 colour spinner
@@ -23,7 +24,7 @@ void spinner() {
  */
 void fourColourWheel(CRGB *leds, int offset) {
   wrappedFill(leds, offset, 29, CRGB::Red, LEDS_PER_HOOP);
-  wrappedFill(leds, offset+29, 29, CRGB::Green, LEDS_PER_HOOP);
-  wrappedFill(leds, offset+58, 29, CRGB::Blue, LEDS_PER_HOOP);
-  wrappedFill(leds, offset+87, 28, CRGB::Yellow, LEDS_PER_HOOP);
+  wrappedFill(leds, offset+29, 29, CRGB::Purple, LEDS_PER_HOOP);
+  wrappedFill(leds, offset+58, 29, CRGB::Green, LEDS_PER_HOOP);
+  wrappedFill(leds, offset+87, 28, CRGB::Blue, LEDS_PER_HOOP);
 }

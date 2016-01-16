@@ -7,7 +7,7 @@ FASTLED_USING_NAMESPACE
 #define NUM_HOOPS     4
 #define LEDS_PER_HOOP 115
 #define NUM_LEDS      (NUM_HOOPS * LEDS_PER_HOOP)
-#define BRIGHTNESS          96
+#define BRIGHTNESS          128 //48  //96
 
 // Globals
 
@@ -19,22 +19,34 @@ long gAcc[NUM_HOOPS];
 // LEDs that all patterns write to
 CRGB leds[NUM_LEDS];
 
-uint8_t energy[NUM_LEDS];
-
-// Libraries
-#include "ParticleSystem.h"
-#include "Button.h"
-
-
 uint8_t gCurrentPatternNumber = 0; // Index number of which pattern is current
 uint8_t gHue = 0; // rotating "base color" used by many of the patterns
 
 // Delay between frames in ms
 int gFrameDelay = 10;
 
+#define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
+
+// Libraries
+#include "Button.h"
+#include "ParticleSystem.h"
+#include "GfxLib.h"
+#include "Elastic.h"
+
+//Patterns
+#include "BondDots.h"
+#include "ColourFields.h"
+#include "RapidCycle.h"
+#include "Spinner.h"
+
 void nextPattern();
 
 Button nextPatternButton(8, &nextPattern);
+
+// List of patterns to cycle through.  Each is defined as a separate function below.
+typedef void (*SimplePatternList[])();
+SimplePatternList gPatterns = { colourFields, spinner, rapidCycle, bondDots };
+SimplePatternList gPatternSetups = { colourFieldsSetup, spinnerSetup, rapidCycleSetup, bondDotsSetup };
 
 void setup() {
   Serial.begin(9600);
@@ -47,14 +59,10 @@ void setup() {
   // set master brightness control
   FastLED.setBrightness(BRIGHTNESS);
 
-  spinnerSetup();
   nextPatternButton.setup();
-}
 
-// List of patterns to cycle through.  Each is defined as a separate function below.
-typedef void (*SimplePatternList[])();
-SimplePatternList gPatterns = { spinner, rapidCycle, bondDots };
-SimplePatternList gPatternSetups = { spinnerSetup, rapidCycleSetup, bondDotsSetup };
+  gPatternSetups[gCurrentPatternNumber]();
+}
 
 void loop()
 {
@@ -72,10 +80,8 @@ void loop()
 
   // do some periodic updates
   EVERY_N_MILLISECONDS( 20 ) { gHue++; } // slowly cycle the "base color" through the rainbow
-  EVERY_N_SECONDS( 30 ) { nextPattern(); } // change patterns periodically
+  EVERY_N_SECONDS( 200 ) { nextPattern(); } // change patterns periodically
 }
-
-#define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
 void nextPattern()
 {

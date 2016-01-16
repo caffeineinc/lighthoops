@@ -2,7 +2,7 @@
  * Simple particle system to support other patterns
  */
 
-#define MAX_PARTICLES   (4 * NUM_HOOPS)
+#define MAX_PARTICLES   (8)
 
 int gNumParticles = 0;
 
@@ -15,7 +15,7 @@ struct Particle {
   int offset; // Position, in 16ths of an LED
   int vel; // Velocity, in 256ths of an offset unit per tick
   int acc; // Velocity, in 256ths of a velocity unit per tick
-  
+
   int min; // offset constraints
   int max;
 };
@@ -26,7 +26,7 @@ Particle particles[MAX_PARTICLES];
  * Initialise a stationary particle
  */
 void initParticle(int i, long offset, CHSV colour) {
-  particles[i] = {colour, offset, 0, 0, 0, NUM_LEDS * 16 }; 
+  particles[i] = {colour, offset, 0, 0, 0, NUM_LEDS * 16 };
 }
 
 /**
@@ -116,7 +116,7 @@ void blendBetweenParticles() {
   int i, nextI, length;
   for(i=0; i<gNumParticles; i++) {
     nextI = (i+1) % gNumParticles;
-    
+
     length = (particles[nextI].offset - particles[i].offset)/16;
     if(length < 0) length += LEDS_PER_HOOP;
     wrappedGradient(leds, particles[i].offset/16, length, particles[i].colour, particles[nextI].colour, LEDS_PER_HOOP);
@@ -128,10 +128,10 @@ void blendBetweenParticles() {
  */
 void drawParticles() {
   int i;
-  
+
   for(i=0; i<gNumParticles; i++) {
     leds[particles[i].offset / 16] = particles[i].colour;
   }
 }
- 
+
 
