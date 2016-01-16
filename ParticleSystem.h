@@ -64,6 +64,41 @@ void moveParticles() {
   }
 }
 
+void swapParticles(int a, int b);
+
+/**
+ * Sort particles by offset
+ * Bubble sort is tolerable, given the array is only a few elements
+ */
+void sortParticles() {
+  int i;
+  bool iterateAgain = true;
+
+  while(iterateAgain) {
+    iterateAgain = false;
+    for(i=0; i<NUM_POINTS-1; i++) {
+      if(particles[i].offset > particles[i+1].offset) {
+        swapParticles(i, i+1);
+        iterateAgain = true;
+      }
+    }
+  }
+}
+
+/**
+ * Swap 2 particles in the global array, without swapping the colour
+ */
+void swapParticles(int a, int b) {
+  Particle tmp;
+  tmp = particles[a];
+  particles[a] = particles[b];
+
+  particles[a].colour = tmp.colour;
+  tmp.colour = particles[b].colour;
+
+  particles[b] = tmp;
+}
+
 /**
  * Particle GFX lib
  */
