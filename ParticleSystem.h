@@ -2,28 +2,31 @@
  * Simple particle system to support other patterns
  */
 
-#define NUM_POINTS 4
+#define MAX_PARTICLES   (4 * NUM_HOOPS)
+
+int gNumParticles = 0;
 
 /**
  * A particles a physically aware coloured point
  */
 struct Particle {
   CHSV colour;
-  long offset; // Position, in 16ths of an LED
-  long vel; // Velocity, in 256ths of an offset unit per tick
-  long acc; // Velocity, in 256ths of a velocity unit per tick
 
-  long min; // offset constraints
-  long max;
+  int offset; // Position, in 16ths of an LED
+  int vel; // Velocity, in 256ths of an offset unit per tick
+  int acc; // Velocity, in 256ths of a velocity unit per tick
+  
+  int min; // offset constraints
+  int max;
 };
 
-Particle particles[NUM_POINTS];
+Particle particles[MAX_PARTICLES];
 
 /**
  * Initialise a stationary particle
  */
 void initParticle(int i, long offset, CHSV colour) {
-  particles[i] = {colour, offset, 0, 0, 0, NUM_LEDS * 16 };
+  particles[i] = {colour, offset, 0, 0, 0, NUM_LEDS * 16 }; 
 }
 
 /**
@@ -59,7 +62,7 @@ void moveParticles() {
   unsigned int i;
 
   // vel & pos updates aren't configurable
-  for(i=0; i<NUM_POINTS; i++) {
+  for(i=0; i<gNumParticles; i++) {
     moveParticle(&(particles[i]));
   }
 }
@@ -76,7 +79,7 @@ void sortParticles() {
 
   while(iterateAgain) {
     iterateAgain = false;
-    for(i=0; i<NUM_POINTS-1; i++) {
+    for(i=0; i<gNumParticles-1; i++) {
       if(particles[i].offset > particles[i+1].offset) {
         swapParticles(i, i+1);
         iterateAgain = true;
@@ -111,9 +114,9 @@ void wrappedGradient(CRGB *, int, int, CRGB, CRGB, int);
  */
 void blendBetweenParticles() {
   int i, nextI, length;
-  for(i=0; i<NUM_POINTS; i++) {
-    nextI = (i+1) % NUM_POINTS;
-
+  for(i=0; i<gNumParticles; i++) {
+    nextI = (i+1) % gNumParticles;
+    
     length = (particles[nextI].offset - particles[i].offset)/16;
     if(length < 0) length += LEDS_PER_HOOP;
     wrappedGradient(leds, particles[i].offset/16, length, particles[i].colour, particles[nextI].colour, LEDS_PER_HOOP);
@@ -125,10 +128,10 @@ void blendBetweenParticles() {
  */
 void drawParticles() {
   int i;
-
-  for(i=0; i<NUM_POINTS; i++) {
+  
+  for(i=0; i<gNumParticles; i++) {
     leds[particles[i].offset / 16] = particles[i].colour;
   }
 }
-
+ 
 

@@ -23,12 +23,18 @@ uint8_t energy[NUM_LEDS];
 
 // Libraries
 #include "ParticleSystem.h"
+#include "Button.h"
+
 
 uint8_t gCurrentPatternNumber = 0; // Index number of which pattern is current
 uint8_t gHue = 0; // rotating "base color" used by many of the patterns
 
 // Delay between frames in ms
 int gFrameDelay = 10;
+
+void nextPattern();
+
+Button nextPatternButton(8, &nextPattern);
 
 void setup() {
   Serial.begin(9600);
@@ -42,6 +48,7 @@ void setup() {
   FastLED.setBrightness(BRIGHTNESS);
 
   spinnerSetup();
+  nextPatternButton.setup();
 }
 
 // List of patterns to cycle through.  Each is defined as a separate function below.
@@ -60,6 +67,8 @@ void loop()
   if(gFrameDelay) {
     FastLED.delay(gFrameDelay );
   }
+
+  nextPatternButton.loop();
 
   // do some periodic updates
   EVERY_N_MILLISECONDS( 20 ) { gHue++; } // slowly cycle the "base color" through the rainbow
