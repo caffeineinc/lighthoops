@@ -45,8 +45,8 @@ Button nextPatternButton(8, &nextPattern);
 
 // List of patterns to cycle through.  Each is defined as a separate function below.
 typedef void (*SimplePatternList[])();
-SimplePatternList gPatterns = { colourFields, spinner, rapidCycle, bondDots };
-SimplePatternList gPatternSetups = { colourFieldsSetup, spinnerSetup, rapidCycleSetup, bondDotsSetup };
+SimplePatternList gPatterns = { bondDots, colourFields, spinner, rapidCycle };
+SimplePatternList gPatternSetups = { bondDotsSetup, colourFieldsSetup, spinnerSetup, rapidCycleSetup };
 
 void setup() {
   Serial.begin(9600);
